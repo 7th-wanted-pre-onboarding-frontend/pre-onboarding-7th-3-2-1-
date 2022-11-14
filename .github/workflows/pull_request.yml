@@ -1,0 +1,23 @@
+name: Project CI when run pull_request
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  Continuous_Integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - name: 체크아웃 액션을 사용합니다.
+        uses: actions/checkout@v3
+      - name: Node.js ${{ matrix.node-version }}을 설치합니다.
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Npm 패키지를 설치합니다.
+        run: npm ci
+      - name: 코드 스타일을 체킹합니다.
+        run: npm run format:check && npm run lint
+      - name: 빌드 시 에러가 있는제 체킹합니다.
+        run: npm run build
