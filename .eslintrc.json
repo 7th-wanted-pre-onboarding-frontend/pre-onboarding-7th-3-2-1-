@@ -1,3 +1,34 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "rules": {
+    "semi": ["error", "always"],
+    "semi-spacing": ["error"],
+    "curly": ["error"],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+    "comma-dangle": ["error", "never"],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "comma-style": ["error", "last"],
+    "import/no-unresolved": ["error", { "commonjs": true, "amd": true }],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "no-useless-escape": ["error"],
+    "linebreak-style": [0, "error", "windows"],
+    "react/destructuring-assignment": ["error", "always"],
+    "jsx-quotes": ["error", "prefer-single"],
+    "switch-colon-spacing": ["error"],
+    "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
+    "react/prop-types": "off",
+    "no-alert": "off",
+    "object-curly-newline": "off",
+    "class-methods-use-this": "off",
+    "operator-linebreak": "off",
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "no-plusplus": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "import/no-cycle": "off",
+    "no-case-declarations": "off"
+  }
 }
