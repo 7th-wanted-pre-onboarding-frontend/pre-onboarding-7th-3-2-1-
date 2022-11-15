@@ -9,7 +9,6 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 import { store } from '../utils/store';
 import RouterGuard from '../components/RouterGuard';
-
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {

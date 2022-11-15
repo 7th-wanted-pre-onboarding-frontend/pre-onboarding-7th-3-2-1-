@@ -30,7 +30,7 @@ export default async function handler(
       password: '123123as'
     });
 
-    const expiredTime = 10;
+    const expiredTime = 3600;
     const expiredDate = new Date(Date.now() + expiredTime * 1000);
 
     res.setHeader('Set-Cookie', [
