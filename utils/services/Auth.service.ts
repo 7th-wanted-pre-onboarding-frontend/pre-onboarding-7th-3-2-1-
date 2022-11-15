@@ -6,10 +6,10 @@ import CookieService from './Cookie.service';
 import LocalService from './Local.service';
 
 class AuthService {
-  signIn() {
+  signIn({ email, password }: { email: string; password: string }) {
     return request.post<IAuth>('api/login', {
-      email: 'mason@gollala.com',
-      password: '123123as'
+      email,
+      password
     });
   }
 
