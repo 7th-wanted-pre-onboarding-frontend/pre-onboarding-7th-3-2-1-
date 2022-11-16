@@ -3,7 +3,7 @@ import request from '../request';
 
 class AccountService {
   getList() {
-    return request.get<IAccount[]>('api/accounts');
+    return request.get<IAccount[]>('/api/accounts');
   }
 }
 

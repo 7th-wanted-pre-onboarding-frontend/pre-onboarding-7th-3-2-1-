@@ -7,14 +7,14 @@ import LocalService from './Local.service';
 
 class AuthService {
   signIn({ email, password }: { email: string; password: string }) {
-    return request.post<IAuth>('api/login', {
+    return request.post<IAuth>('/api/login', {
       email,
       password
     });
   }
 
   signOut() {
-    return request.post('api/logout');
+    return request.post('/api/logout');
   }
 
   autoSignOut(router: NextRouter) {
