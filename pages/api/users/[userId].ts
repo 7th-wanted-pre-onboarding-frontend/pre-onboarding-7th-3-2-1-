@@ -26,7 +26,7 @@ export default async function handler(
       }
     );
     delete data['password'];
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 
   res.status(401).json({
