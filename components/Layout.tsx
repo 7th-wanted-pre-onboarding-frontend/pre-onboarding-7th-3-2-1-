@@ -20,7 +20,8 @@ export default function Layout({ children, title }: Props) {
   return (
     <section
       style={{
-        display: 'flex'
+        display: 'flex',
+        minHeight: '100vh'
       }}
     >
       <section>
@@ -38,8 +39,9 @@ export default function Layout({ children, title }: Props) {
       <Box
         component='section'
         sx={{
-          flexGrow: 1,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: '100%',
+          margin: '0 auto',
+          overflowX: 'hidden',
           marginTop: { sm: '64px', xs: '56px' }
         }}
       >
