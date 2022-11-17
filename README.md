@@ -52,3 +52,81 @@
 - 위 코드를 **Login.tsx**의 코드 중 일부입니다. Http 쿠키에 저장된 accessToken 값은 **Next.js 미들웨어**에서 체킹하기 때문에 토큰이 만료되어 사려졌을 경우에는 자동적으로 **/login** 페이지로 리다이렉트처리가 되도록 설정을 해놓았습니다. 하지만, 이게 끝은 아닙니다.
 - 분명히 localStorage에 userId가 남아있을 것이고, 쿠키에는 expiredTime 데터가 남아있을 것이고, 전역 상태에 user값이 남아 있을 수 있습니다. 따라서 이를 지워주는 작업을 해주어야 비로소 로그아웃처리가 완료됐다고 말씀드릴 수 있습니다.
 
+# 계좌 목록 가져오기
+- 계좌 목록의 요구사항은 다음과 같습니다.
+  - 고객명(user_name) : 고객ID 를 참조하여 실제 이름으로 보여져야 합니다.
+  - 고객명을 누를 경우 사용자 상세화면으로 이동합니다.
+  - 브로커명(broker_name) : 예시) OO증권, `brokers.json` 를 참조하여 실제 이름으로 보여져야 합니다.
+  - 계좌번호(number) : 앞 뒤 각각 두글자를 제외하고 나머지는 글자수에 맞게 `*` 글자로 마스킹 처리가 필요합니다.
+  - 계좌상태(status) : 예시) 운용중, `accountStatus.json` 를 참조하여 실제 이름으로 보여져야 합니다.
+  - 계좌명(name) : 계좌명입니다.
+  - 평가금액(assets) : 예시) 123,123,123
+  - 입금금액(payments) : 예시) 123,123,123
+  - 계좌활성화여부(is_active) : 계좌 활성화 여부
+  - 계좌개설일(created_at)
+- 나머지 정보는 **localhost:4000/accounts**을 Get요청을 보내면 받을 수 있지만, **고객명**의 경우에는 받을 수가 없었습니다. 따라서 앤드포인트 API인 **/api/accounts**를 만들어서 두 API를 **Promise.all** 함수를 이용하여 한번에 불러와서 조합하는 형태로 코드를 작성하였습니다.
+```javascript
+const promises = [
+      request.get<IUser[]>('http://localhost:4000/users', {
+        headers: {
+          Authorization: token.replace('token=', 'Bearer ')
+        }
+      }),
+      request.get<IAccount[]>('http://localhost:4000/accounts', {
+        headers: {
+          Authorization: token.replace('token=', 'Bearer ')
+        },
+        params: {
+          _limit: LIMIT,
+          _page: req.query.page,
+          q: req.query.keyword,
+          broker_id: req.query.broker_id,
+          is_active: req.query.is_active,
+          status: req.query.status
+        }
+      })
+    ];
+const [usersResponse, accountsResponse] = await Promise.all(promises); // 두 응답을 조합하여 위 요구사항을 만족할 수 있게 코드를 작성하였음.
+```
+
+## 사용자 목록 가져오기
+- 위 내용과 같습니다. **localhost:4000/accounts**, **localhost:4000/users**, **localhost:4000/userSetting** 세 개를 조합한 엔드포인트 **/api/users** 사용자 리스트에 필요한 데이터를 합성시켜서 브라우저로 전달하였습니다.
+```javascript
+const users = await request.get<IUser[]>(`http://localhost:4000/users`, {
+    headers: {
+      Authorization: token.replace('token=', 'Bearer ')
+    },
+    params: {
+      _limit: LIMIT,
+      _page: req.query.page,
+      q: req.query.keyword
+    }
+  });
+
+  const userIds = users.data.map((user) => ({
+    uuid: user.uuid,
+    id: user.id
+  }));
+
+  const acccountsPromises = userIds.map(({ id }) =>
+    request.get<IAccount[]>('http://localhost:4000/accounts', {
+      params: {
+        user_id: id
+      },
+      headers: {
+        Authorization: token.replace('token=', 'Bearer ')
+      }
+    })
+  );
+
+  const settingsPromises = userIds.map(({ uuid }) =>
+    request.get<IUserSetting[]>('http://localhost:4000/userSetting', {
+      params: {
+        uuid: uuid
+      },
+      headers: {
+        Authorization: token.replace('token=', 'Bearer ')
+      }
+    })
+  );
+```
