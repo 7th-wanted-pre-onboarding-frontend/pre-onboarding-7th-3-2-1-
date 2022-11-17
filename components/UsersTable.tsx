@@ -56,7 +56,7 @@ export default function UsersTable({ users }: Props) {
                 },
                 index
               ) => (
-                <TableRow key={`table-row-${index + 1}`}>
+                <TableRow key={`table-row-${index + 1}`} role='checkbox'>
                   <TableCell align='center'>
                     <Typography
                       variant='body2'

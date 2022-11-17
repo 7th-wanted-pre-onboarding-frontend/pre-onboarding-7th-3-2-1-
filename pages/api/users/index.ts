@@ -66,6 +66,7 @@ export default async function handler(
 
       const result = users.data.map((user, index) => {
         const accountCounts = accountResponses[index].data.length;
+
         const allowMarketingPush = settingReponses[index].data.length
           ? settingReponses[index].data[0].allow_marketing_push
           : false;
