@@ -23,7 +23,7 @@ class AuthService {
 
     setTimeout(async () => {
       try {
-        await request.post('api/logout');
+        await this.signOut();
         router.push('/login');
       } catch (e) {
         console.log(e);

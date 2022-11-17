@@ -5,11 +5,11 @@ import {
   OutlinedInput
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import React, { Dispatch, ReactNode, SetStateAction, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useRouter } from 'next/router';
 import { getParams } from '../utils/common/functions';
 
-export default function SearchForm() {
+export default function AccountSearchForm() {
   const router = useRouter();
   const ref = useRef<HTMLInputElement | null>(null);
 
