@@ -1,34 +1,13 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 인증로직
+- 인증 로직은 크게 로그인, 자동 로그인, 자동 로그아웃으로 이루어져 있습니다.
 
-## Getting Started
+### 회원가입과 로그인을 하나로 합친 로그인 프로세스
+<p align="center">
+  <img width="729" alt="스크린샷 2022-11-17 22 06 28" src="https://user-images.githubusercontent.com/58736618/202454412-9d66703f-3c47-41ba-adec-e1d77aec240b.png">
+</p>
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 위 그림은 로그인 순서도 입니다.
+- 로그인을 할 경우, 로그인 API 말고 회원가입 API으로 요청을 날려서 진행하라는 말을 들었지만, 회원가입 하나만으로는 아이디 중복문제가 있기 때문에 로그인 기능을 대체할 수는 없었습니다.
+- 그래서 Next.js의 엔드포인트를 이용하여 **/api/login** 라는 커스텀 API를 만들어서, 먼저 회원가입 요청을 날리고, 중복 에러가 발생하면 이를 캐치하여 로그인 요청을 다시 날려서 로그인과 회원가입을 하나의 기능으로 합쳤습니다.
+- 로그인이 성공하면, [XSS 공격](https://namu.wiki/w/XSS)으로 인한 쿠키 탈취 문제를 방지하고자 Http 쿠키에 AccessToken을 만료시간(1시간)에 맞게 저장하였습니다.
+- 또한, 자동 로그인 구현을 위해 ExpiredTime을 쿠키에 저장하였고, userId(데이터 베이스 상 내 계정의 아이디 값)을 로컬 스토리지에 저장하였습니다.
