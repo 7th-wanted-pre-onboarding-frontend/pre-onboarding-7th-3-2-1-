@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
+import { faker } from '@faker-js/faker';
 import request from '../../utils/request';
 import { IAuth } from '../../utils/models/interfaces/IAuth';
 
@@ -28,10 +29,21 @@ export default async function handler(
 
   const { email, password } = req.body;
   try {
+    const createdAt = new Date().toISOString();
+
     const { data } = await request.post<IAuth>('http://localhost:4000/signup', {
       email,
       password,
-      name: '원티드'
+      name: '티드 원',
+      uuid: faker.datatype.uuid(),
+      age: 30,
+      gender_origin: 1,
+      birth_date: '1993-04-01T00:00:00.000Z',
+      phone_number: '010-5228-6821',
+      address: 'Geyang 인천시',
+      detail_address: '123-2 라비캐슬',
+      created_at: createdAt,
+      last_login: createdAt
     });
 
     const expiredTime = 3600;
@@ -63,12 +75,26 @@ async function Login(
     email,
     password
   });
-
+  const accessToken = data.accessToken;
   const expiredTime = 3600;
   const expiredDate = new Date(Date.now() + expiredTime * 1000);
+  const lastLogin = new Date().toISOString();
+  const userId = data.user.id;
+
+  await request.patch(
+    `http://localhost:4000/users/${userId}`,
+    {
+      last_login: lastLogin
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    }
+  );
 
   res.setHeader('Set-Cookie', [
-    `token=${data.accessToken}; HttpOnly; path=/; max-age=${expiredTime};`,
+    `token=${accessToken}; HttpOnly; path=/; max-age=${expiredTime};`,
     `expiredDate=${+expiredDate}; path=/;`
   ]);
 
