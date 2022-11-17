@@ -1,3 +1,57 @@
+# 원티드 프리온보딩 3-1 1팀
+
+# 팀 소개
+
+| 이름         | github                         |
+| ------------ | ------------------------------ |
+| 박승민(팀장) | https://github.com/pmb087      |
+| 김정현       | https://github.com/task11      |
+| 김준호       | https://github.com/kimjuno97   |
+| 윤태성       | https://github.com/taesung1993 |
+| 임형섭       | https://github.com/4hsnim      |
+| 조서연       | https://github.com/sycho09     |
+
+# 기술 스택
+
+<img src="https://img.shields.io/badge/javascript_ES6-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/next.js-61DAFB?style=for-the-badge&logo=next.js&logoColor=white">
+<img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+<img src="https://img.shields.io/badge/material_ui-DB7093?style=for-the-badge&logo=material-ui&logoColor=white">
+<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white">
+
+# 실행 방법
+
+1. 프로젝트 관련 라이브러리를 설치합니다.
+
+```bash
+npm install
+```
+
+2. 프로젝트를 실행합니다.
+
+```bash
+npm run dev
+```
+
+3. `API` Repo를 클론받습니다.
+
+```bash
+git clone https://github.com/walking-sunset/assignment-api_7th.git
+```
+
+4. 같은 방식으로 `API` 프로젝트 관련 라이브러리를 설치합니다.
+
+```bash
+npm install
+```
+
+5. `API` 프로젝트를 실행합니다.
+
+```bash
+npm run api   //실행 시 localhost:4000 에 API 서버 실행
+```
+
 # 인증로직
 - 인증 로직은 크게 로그인, 자동 로그인, 자동 로그아웃으로 이루어져 있습니다.
 
