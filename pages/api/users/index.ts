@@ -28,7 +28,9 @@ export default async function handler(
           Authorization: token.replace('token=', 'Bearer ')
         },
         params: {
-          _limit: LIMIT
+          _limit: LIMIT,
+          _page: req.query.page,
+          q: req.query.keyword
         }
       });
 
@@ -64,10 +66,10 @@ export default async function handler(
 
       const result = users.data.map((user, index) => {
         const accountCounts = accountResponses[index].data.length;
-        const allowMarketingPush = settingReponses[index]
+        const allowMarketingPush = settingReponses[index].data.length
           ? settingReponses[index].data[0].allow_marketing_push
           : false;
-        const isActive = settingReponses[index]
+        const isActive = settingReponses[index].data.length
           ? settingReponses[index].data[0].is_active
           : false;
 
@@ -96,7 +98,7 @@ export default async function handler(
         data: result
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       throw new Error('Somethin went wrong');
     }
   }

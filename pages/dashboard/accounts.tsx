@@ -7,7 +7,7 @@ import Layout from '../../components/Layout';
 import { Pagination } from '@mui/material';
 import AccountsTable from '../../components/AccountsTable';
 import { useMemo } from 'react';
-import SearchForm from '../../components/SearchForm';
+import AccountSearchForm from '../../components/AccountSearchForm';
 import AccountFilters from '../../components/AccountFilters';
 import { getParams } from '../../utils/common/functions';
 
@@ -62,8 +62,6 @@ export default function Accounts() {
     }
   );
 
-  const isReadyToLoad = isLoading;
-
   const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
     const query: { [key: string]: any } = {
       ...router.query,
@@ -101,7 +99,7 @@ export default function Accounts() {
               }}
             >
               <AccountFilters />
-              <SearchForm />
+              <AccountSearchForm />
             </div>
             <AccountsTable accounts={data?.data.data || []} />
             <Pagination

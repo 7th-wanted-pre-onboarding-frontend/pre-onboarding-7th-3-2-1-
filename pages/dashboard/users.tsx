@@ -1,7 +1,57 @@
+import { Pagination } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
 import Layout from '../../components/Layout';
+import UsersSearchForm from '../../components/UsersSearchForm';
+import UsersTable from '../../components/UsersTable';
+import { getParams } from '../../utils/common/functions';
+import UsersService from '../../utils/services/Users.service';
 
 export default function Users() {
+  const router = useRouter();
+  const query = useMemo(() => {
+    const page = router.query.page ? +router.query.page : 1;
+    const q = router.query.q;
+    const broker_id = router.query.broker_id;
+    const is_active = router.query.is_active;
+    const status = router.query.status;
+
+    const result: any = {
+      page: page
+    };
+
+    if (q) {
+      result.keyword = q;
+    }
+
+    //  if (broker_id) {
+    //    result['broker_id'] = broker_id;
+    //  }
+
+    //  if (is_active) {
+    //    result['is_active'] = is_active;
+    //  }
+
+    //  if (status) {
+    //    result['status'] = status;
+    //  }
+
+    return result;
+  }, [router.query]);
+
+  const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    const query: { [key: string]: any } = {
+      ...router.query,
+      page: value
+    };
+    const params = getParams(query);
+    router.push(router.pathname + params);
+  };
+
+  const { data } = useQuery(['users', query], UsersService.get);
+
   return (
     <article>
       <Head>
@@ -12,7 +62,37 @@ export default function Users() {
 
       <main>
         <Layout title='사용자'>
-          <h1>유저 리스트</h1>
+          <section
+            style={{
+              padding: '24px 16px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'space-between',
+              justifyContent: 'center',
+              gap: '30px'
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end'
+              }}
+            >
+              <UsersSearchForm />
+            </div>
+            <UsersTable users={data?.data.data || []} />
+            <Pagination
+              count={data?.data.totalPage || 1}
+              page={query.page}
+              variant='outlined'
+              shape='rounded'
+              onChange={handleChange}
+              sx={{
+                margin: '0 auto'
+              }}
+            />
+          </section>
         </Layout>
       </main>
     </article>
