@@ -32,6 +32,22 @@ class UsersService {
     });
   }
 
+  createUser(body: {
+    email: string;
+    name: string;
+    phone_number: string;
+    address: string;
+    detail_address: string;
+    birth_date: string;
+    age: number;
+    uuid: string;
+    gender_origin: number;
+    created_at: string;
+    last_login: string;
+  }) {
+    return request.post('/api/user/create', body);
+  }
+
   convertSecretName(fullName: string) {
     const [firstName, lastName] = fullName.split(/\s/);
     let convertedFirstName = '';

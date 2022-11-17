@@ -1,8 +1,9 @@
-import { Pagination } from '@mui/material';
+import { Button, Pagination } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
+import CreateUserButton from '../../components/CreateUserButton';
 import Layout from '../../components/Layout';
 import UsersSearchForm from '../../components/UsersSearchForm';
 import UsersTable from '../../components/UsersTable';
@@ -14,9 +15,6 @@ export default function Users() {
   const query = useMemo(() => {
     const page = router.query.page ? +router.query.page : 1;
     const q = router.query.q;
-    const broker_id = router.query.broker_id;
-    const is_active = router.query.is_active;
-    const status = router.query.status;
 
     const result: any = {
       page: page
@@ -25,18 +23,6 @@ export default function Users() {
     if (q) {
       result.keyword = q;
     }
-
-    //  if (broker_id) {
-    //    result['broker_id'] = broker_id;
-    //  }
-
-    //  if (is_active) {
-    //    result['is_active'] = is_active;
-    //  }
-
-    //  if (status) {
-    //    result['status'] = status;
-    //  }
 
     return result;
   }, [router.query]);
@@ -76,9 +62,27 @@ export default function Users() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'flex-end'
+                justifyContent: 'space-between'
               }}
             >
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  height: '28px'
+                }}
+              >
+                <CreateUserButton />
+                <Button
+                  variant='contained'
+                  sx={{
+                    height: '28px'
+                  }}
+                >
+                  사용자 삭제
+                </Button>
+              </div>
               <UsersSearchForm />
             </div>
             <UsersTable users={data?.data.data || []} />
