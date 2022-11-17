@@ -34,10 +34,9 @@ npm install
 npm run dev
 ```
 
-3. `API` Repo를 클론받습니다.
-
+3. [서버 Repo](https://github.com/7th-wanted-pre-onboarding-frontend/pre-onboarding-7th-3-2-1--server)를 클론받습니다.
 ```bash
-git clone https://github.com/walking-sunset/assignment-api_7th.git
+git clone https://github.com/7th-wanted-pre-onboarding-frontend/pre-onboarding-7th-3-2-1--server.git
 ```
 
 4. 같은 방식으로 `API` 프로젝트 관련 라이브러리를 설치합니다.
@@ -49,7 +48,8 @@ npm install
 5. `API` 프로젝트를 실행합니다.
 
 ```bash
-npm run api   //실행 시 localhost:4000 에 API 서버 실행
+npm run gen  
+npm run start 
 ```
 
 # 인증로직
