@@ -7,3 +7,9 @@ export const getParams = (query: { [key: string]: any }) =>
     }
     return result;
   }, '');
+
+export const hidePhoneNumber = (number: string) => {
+  const splited = number.split('-');
+  splited[1] = splited[1].replace(/./g, '*');
+  return splited.join('-');
+};

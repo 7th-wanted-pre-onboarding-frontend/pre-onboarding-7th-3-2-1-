@@ -1,6 +1,4 @@
-import { ConnectingAirportsOutlined } from '@mui/icons-material';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Map } from 'typescript';
 import { IAccount } from '../../utils/models/interfaces/IAccount';
 import { IDAccount } from '../../utils/models/interfaces/IDAccount';
 import { IUser } from '../../utils/models/interfaces/IUser';
