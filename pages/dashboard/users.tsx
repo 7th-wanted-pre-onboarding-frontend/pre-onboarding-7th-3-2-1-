@@ -74,14 +74,6 @@ export default function Users() {
                 }}
               >
                 <CreateUserButton />
-                <Button
-                  variant='contained'
-                  sx={{
-                    height: '28px'
-                  }}
-                >
-                  사용자 삭제
-                </Button>
               </div>
               <UsersSearchForm />
             </div>

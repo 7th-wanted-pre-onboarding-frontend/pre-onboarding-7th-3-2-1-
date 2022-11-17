@@ -37,6 +37,7 @@ export default function UsersTable({ users }: Props) {
               <TableCell align='center'>혜택 수신 동의 여부</TableCell>
               <TableCell align='center'>활성화 여부</TableCell>
               <TableCell align='center'>가입일</TableCell>
+              <TableCell align='center'>설정</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -56,7 +57,7 @@ export default function UsersTable({ users }: Props) {
                 },
                 index
               ) => (
-                <TableRow key={`table-row-${index + 1}`}>
+                <TableRow key={`table-row-${index + 1}`} role='checkbox'>
                   <TableCell align='center'>
                     <Typography
                       variant='body2'
