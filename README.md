@@ -143,7 +143,7 @@ const promises = [
 const [usersResponse, accountsResponse] = await Promise.all(promises); // 두 응답을 조합하여 위 요구사항을 만족할 수 있게 코드를 작성하였음.
 ```
 
-## 사용자 목록 가져오기
+# 사용자 목록 가져오기
 - 위 내용과 같습니다. **localhost:4000/accounts**, **localhost:4000/users**, **localhost:4000/userSetting** 세 개를 조합한 엔드포인트 **/api/users** 사용자 리스트에 필요한 데이터를 합성시켜서 브라우저로 전달하였습니다.
 ```javascript
 const users = await request.get<IUser[]>(`http://localhost:4000/users`, {
